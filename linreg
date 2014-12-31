@@ -1,0 +1,59 @@
+*Simple Linear Regression - note: discards any records with missing values in X variable;
+proc reg data=DATASET;
+    model Oxygen_Consumption = RunTime;
+run;
+quit;
+
+Finding Predicted Values with PROC SCORE
+data X_Values;
+    input Weight @@;
+    datalines;
+125 150 175 200 225
+;
+run;
+
+proc reg data=DATASET noprint outest=Betas;
+    MODELNAME: model Y=X;
+run;
+quit;
+
+proc score data=X_Values score=Betas
+           out=Scored type=parms;
+    var Weight;
+run;
+
+proc print data=Scored;
+    title "Scored New Observations";
+run;
+
+
+*Finding Predicted Values with Data Step;
+data Need_Predictions;
+    input RunTime @@;
+    datalines;
+9 10 11 12 13
+;
+run;
+
+*Concatenate datasets (SAS ignores obs with missing values);
+data Predict;
+    set Need_Predictions 
+        DATASET;
+run;
+
+proc reg data=Predict;
+    model Y=X / p;
+    id X;
+    title 'Predicted Values';   
+run;
+quit;
+
+
+*Fitting a Multiple Linear Regression;
+proc reg data=DATASET;
+    model Y=X1 X2;
+    title 'Multiple Linear Regression';
+run;
+quit;
+
+ ods graphics/imagemap=on;  This option allows hover over points on graphs
