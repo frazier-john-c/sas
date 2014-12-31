@@ -1,0 +1,9 @@
+/* Summary Statistics, Histograms, & QQ-Plots */
+proc univariate data=DATASET;
+    var VARNAME;
+    histogram VARNAME / normal(mu=est sigma=est) kernel;
+    inset skewness kurtosis / position=ne;
+    probplot VARNAME / normal(mu=est sigma=est);
+    inset skewness kurtosis;
+    title 'Descriptive Statistics Using PROC UNIVARIATE';
+run;
