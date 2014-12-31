@@ -1,0 +1,6 @@
+/* Vertical Box-plot with SGPLOT */
+proc sgplot data=DATASET;
+    vbox VARIABLE1 / datalabel=VARIABLE2;
+    refline 1200 / axis=y label;
+    title "Box Plots";
+run;
