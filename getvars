@@ -1,0 +1,9 @@
+*This macro stores all the variables from a dataset into the global variable vlist;
+%macro getvars(dsn);
+  %global vlist;
+  proc sql;
+    select name into :vlist separated by ' '
+    from dictionary.columns
+    where memname=upcase("&dsn");
+  quit;
+%mend;
