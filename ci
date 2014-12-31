@@ -1,6 +1,0 @@
-*Confidence interval (clm);
-proc means data=DATASET maxdec=2
-           n mean std stderr clm alpha=.95;
-    var VARIABLE;
-    title '95% Confidence Interval for SAT';
-run;

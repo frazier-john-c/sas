@@ -1,0 +1,23 @@
+*Hypothesis Testing;
+ods graphics off;
+ods select testsforlocation;
+proc univariate data=DATASET mu0=1200;
+    var VARIABLE;
+    title 'T-Test For Mean';
+run;
+ods graphics on;
+
+*Hypothesis Test (Another Way);
+proc ttest data=DATASET h0=1200
+           plots(shownull)=interval;
+    var VARIABLE;
+    title 'T-Test For The Mean '
+          'Using PROC TTEST';
+run;
+
+*Confidence interval (clm);
+proc means data=DATASET maxdec=2
+           n mean std stderr clm alpha=.95;
+    var VARIABLE;
+    title '95% Confidence Interval for SAT';
+run;
